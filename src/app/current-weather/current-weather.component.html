@@ -1,0 +1,46 @@
+<div class="w-full h-full space-y-2">
+  <div *ngIf="!current"> <span class="text-[12px] md:text-[14px]">
+    Input city and country (Ex. "Manila", "PH") 
+  </span></div>
+  <div *ngIf="current" class="flex flex-col justify-center">
+    <div>
+      <span class="text-2xl lg:text-4xl font-bold">{{current?.city}}, {{current?.country}} </span>
+    </div>
+    <div>
+      <span class="text-[14px] lg:text-xl">{{current?.date | date: 'fullDate'}}</span>
+    </div>
+    <div class="flex justify-center">
+      <div>
+        <img [src]="current?.image" class="w-[65px] lg:w-[75px]">
+      </div>
+      <div class="flex justify-center pt-5">
+        <span class="text-xl md:text-2xl lg:text-3xl font-serif font-bold">{{current?.temperature | number:'1.0-0' }} </span>
+        <span class="text-[14px] md:text-xl font-serif">
+          °F
+        </span>
+      </div>
+    </div>
+    <div>
+      <span class="text-2xl">
+        {{current?.description}}
+      </span>
+    </div>
+
+    
+  </div>
+  <form #myForm="ngForm">
+    <div class="space-y-2 flex flex-col items-center justify-center md:flex-row md:space-y-0 md:space-x-2 pt-4 lg:pt-16 pb-4">
+      <div>
+        <input #city="ngModel" id="city" name="city" ngModel required type="text" placeholder="Enter City" class="w-[200px] p-2 md:w-[200px] rounded-md md:p-4 border border-black border-1">
+      </div> 
+      <div *ngIf="myForm.controls['city']?.valid">
+        <input #country id="country" name="country" ngModel required type="text" placeholder="Enter Country" class="w-[200px] p-2 md:w-[200px] rounded-md md:p-4 border border-black border-1">
+      </div>
+    </div>
+    <div class="w-full flex justify-center">
+      <div *ngIf="myForm.controls['country']?.valid" [attr.disabled]="myForm.controls['country']?.valid ? true : null" class="w-[200px] h-[40px] lg:h-[50px] bg-zinc-500 rounded-md flex items-center justify-center " (click)="search(myForm.value.city, myForm.value.country)">
+        <span class="text-white">Search</span>
+      </div>
+    </div>
+  </form>
+</div>
